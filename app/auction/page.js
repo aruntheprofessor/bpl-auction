@@ -10,6 +10,7 @@ import { useAuctionData } from '@/lib/useAuctionData';
 import { auctionAction, callApi } from '@/lib/api';
 import { checkTeamCanBid, getTeamStats } from '@/lib/rules';
 import { money } from '@/lib/format';
+import { balancedColumns } from '@/lib/layout';
 
 export default function AuctionPage() {
   return (
@@ -210,7 +211,7 @@ function AuctionScreen() {
                 )}
               </div>
 
-              <div className="team-buttons">
+              <div className="team-buttons" style={{ '--cols': balancedColumns(teams.length, 5) }}>
                 {teams.map((team, i) => (
                   <TeamButton
                     key={team.id}

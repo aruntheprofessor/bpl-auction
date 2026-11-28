@@ -81,8 +81,11 @@ export default function Stage({ data, mode = 'display', celebrate = false }) {
     <section className={`stage ${mode}`}>
       <div className="stage-player">
         <div className="photo-frame">
-          <PlayerPhoto player={player} />
+          <PlayerPhoto player={player} fit="contain" />
         </div>
+      </div>
+
+      <div className="stage-bid">
         <div className="player-id">
           <h1 className="player-name">{player.name}</h1>
           <div className="chips">
@@ -91,9 +94,6 @@ export default function Stage({ data, mode = 'display', celebrate = false }) {
             {player.level ? <span className="chip">{player.level}</span> : null}
           </div>
         </div>
-      </div>
-
-      <div className="stage-bid">
         <div className="bid-label">{hasBid ? 'Current bid' : 'Opening price'}</div>
         <div className="bid-number" key={shownBid}>
           {money(shownBid)}
@@ -105,7 +105,7 @@ export default function Stage({ data, mode = 'display', celebrate = false }) {
 
         {leader ? (
           <div className="leader" key={`${leader.id}-${state.current_bid}`} style={{ '--team': leader.color }}>
-            <TeamLogo team={leader} size={mode === 'display' ? 96 : 56} />
+            <TeamLogo team={leader} size={mode === 'display' ? undefined : 56} />
             <div>
               <div className="leader-label">Highest bidder</div>
               <div className="leader-name">{leader.name}</div>

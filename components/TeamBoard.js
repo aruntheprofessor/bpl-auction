@@ -1,12 +1,16 @@
-// Row (or grid) of all teams with purse left and how many squad slots are filled.
+// All teams with their full name and purse left, big enough to read from far away.
+// The boxes sit in equal rows (8 teams = 4 + 4).
 import TeamLogo from './TeamLogo';
 import { getTeamStats } from '@/lib/rules';
 import { money } from '@/lib/format';
+import { balancedColumns } from '@/lib/layout';
 
 export default function TeamBoard({ data, leadingTeamId, variant = 'strip' }) {
   const { teams, players, categories, settings } = data;
+  const columns = balancedColumns(teams.length, teams.length <= 8 ? 4 : 5);
+
   return (
-    <div className={`team-board ${variant}`}>
+    <div className={`team-board ${variant}`} style={{ '--cols': columns }}>
       {teams.map((team) => {
         const s = getTeamStats(team, players, categories, settings.starting_purse);
         return (
@@ -15,7 +19,7 @@ export default function TeamBoard({ data, leadingTeamId, variant = 'strip' }) {
             className={`team-chip ${leadingTeamId === team.id ? 'leading' : ''}`}
             style={{ '--team': team.color }}
           >
-            <TeamLogo team={team} size={variant === 'strip' ? 44 : 56} />
+            <TeamLogo team={team} size={variant === 'strip' ? undefined : 56} />
             <div className="team-chip-text">
               <div className="team-chip-name">{team.name}</div>
               <div className="team-chip-purse">{money(s.purseLeft)}</div>
